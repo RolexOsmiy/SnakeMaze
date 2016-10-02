@@ -5,18 +5,35 @@ using UnityEngine.Networking;
 public class Player_Shoot : NetworkBehaviour {
 
 	private int damage = 25;
-	private float range = 200;
+	public float range = 200;
 	[SerializeField] private Transform camTransform;
 	private RaycastHit hit;
+	 
+	//стрельба
+	public bool shoot;
+	public float shootCount;
+	public float shootTime;
+	//звуки
+	AudioSource audio;
+	public AudioClip shot;
+	public AudioClip reload;
+	//патроны
+	public int ammo;
+	public int curAmmo;
+	//перезарядка
+	public bool reloading;
+	public float reloadTime = 3.2f;
 
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () 
+	{
+		audio = gameObject.AddComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		shootCount -= Time.deltaTime;
 		CheckIfShooting();
 	}
 
@@ -27,18 +44,33 @@ public class Player_Shoot : NetworkBehaviour {
 			return;
 		}
 
-		if(Input.GetKeyDown(KeyCode.Mouse0))
+		if(Input.GetKey(KeyCode.Mouse0) && shootCount <= 0 && curAmmo >= 0 && reloading == false)
 		{
 			Shoot();
 		}
+
+		if(Input.GetKeyDown(KeyCode.R))
+		{
+			reloading = true;
+				StartCoroutine(Reload ());
+			audio.PlayOneShot(reload);
+		}
+	}
+
+	IEnumerator Reload() 
+	{
+		yield return new WaitForSeconds(reloadTime);
+		curAmmo = ammo;
+		reloading = false;
 	}
 
 	void Shoot()
 	{
+		curAmmo -= 1;
+		shootCount = shootTime;
+		audio.PlayOneShot (shot);
 		if(Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
 		{
-			//Debug.Log(hit.transform.tag);
-
 			if(hit.transform.tag == "Player")
 			{
 				string uIdentity = hit.transform.name;

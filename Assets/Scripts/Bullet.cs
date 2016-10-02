@@ -19,7 +19,7 @@ public class Bullet : NetworkBehaviour {
 
 	void OnCollisionEnter(Collision collision) 
 	{
-		if(collision.transform.tag == "Player" && !isLocalPlayer)
+		if(collision.transform.tag == "Player")
 		{
 			string uIdentity = collision.transform.name;
 			CmdTellServerWhoWasShot(uIdentity, damage);
@@ -29,6 +29,10 @@ public class Bullet : NetworkBehaviour {
 		{
 			string uIdentity = collision.transform.name;
 			CmdTellServerWhichZombieWasShot(uIdentity, damage);
+		}
+		if (collision.transform == isLocalPlayer)
+		{
+			return;
 		}
 	}
 

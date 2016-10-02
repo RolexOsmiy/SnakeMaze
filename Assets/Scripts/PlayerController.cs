@@ -6,6 +6,7 @@ public class PlayerController : NetworkBehaviour {
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	public AudioClip ShootSound;
+	public int bulletSpeed;
 
 	void Update()
 	{
@@ -38,7 +39,7 @@ public class PlayerController : NetworkBehaviour {
 			bulletSpawn.rotation);
 
 		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * 60;
+		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
 
 		// Spawn the bullet on the Clients
 		NetworkServer.Spawn(bullet);
