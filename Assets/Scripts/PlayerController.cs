@@ -1,56 +1,57 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-public class PlayerController : NetworkBehaviour {
-	
-	public GameObject bulletPrefab;
-	public Transform bulletSpawn;
-	public AudioClip ShootSound;
-	public int bulletSpeed;
+public class PlayerController : NetworkBehaviour
+{
 
-	void Update()
-	{
-		if (!isLocalPlayer)
-		{
-			return;
-		}
+    public GameObject bulletPrefab;
+    public Transform bulletSpawn;
+    public AudioClip ShootSound;
+    public int bulletSpeed;
 
-		var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-		var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
+    void Update()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
-		transform.Rotate(0, x, 0);
-		transform.Translate(0, 0, z);
+        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
+        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
 
-		if (Input.GetKeyDown(KeyCode.Mouse0))
-		{
-			CmdFire();
-		}
-	}
+        transform.Rotate(0, x, 0);
+        transform.Translate(0, 0, z);
 
-	// This [Command] code is called on the Client …
-	// … but it is run on the Server!
-	[Command]
-	void CmdFire()
-	{
-		// Create the Bullet from the Bullet Prefab
-		var bullet = (GameObject)Instantiate(
-			bulletPrefab,
-			bulletSpawn.position,
-			bulletSpawn.rotation);
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            CmdFire();
+        }
+    }
 
-		// Add velocity to the bullet
-		bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+    // This [Command] code is called on the Client …
+    // … but it is run on the Server!
+    [Command]
+    void CmdFire()
+    {
+        // Create the Bullet from the Bullet Prefab
+        var bullet = (GameObject)Instantiate(
+            bulletPrefab,
+            bulletSpawn.position,
+            bulletSpawn.rotation);
 
-		// Spawn the bullet on the Clients
-		NetworkServer.Spawn(bullet);
+        // Add velocity to the bullet
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
 
-		// Destroy the bullet after 2 seconds
-		Destroy(bullet, 2.0f);
-		GetComponent<AudioSource>().PlayOneShot(ShootSound, 0.5f);
-	}
+        // Spawn the bullet on the Clients
+        NetworkServer.Spawn(bullet);
 
-	public override void OnStartLocalPlayer ()
-	{
-		GetComponent<MeshRenderer>().material.color = Color.blue;
-	}
+        // Destroy the bullet after 2 seconds
+        Destroy(bullet, 2.0f);
+        GetComponent<AudioSource>().PlayOneShot(ShootSound, 0.5f);
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.blue;
+    }
 }

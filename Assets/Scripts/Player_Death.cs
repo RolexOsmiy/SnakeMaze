@@ -28,7 +28,7 @@ public class Player_Death : NetworkBehaviour {
 	void DisablePlayer ()
 	{
 		GetComponent<CharacterController>().enabled = false;
-		GetComponent<PlayerController>().enabled = false;
+		GetComponent<Player_Shoot>().enabled = false;
 		GetComponent<BoxCollider>().enabled = false;
 
 		Renderer[] renderers = GetComponentsInChildren<Renderer>();
