@@ -100,11 +100,11 @@ public class Player_Shoot : NetworkBehaviour {
                 ShootPistol();
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && reloadingPistol == false)
+			if (Input.GetKeyDown(KeyCode.R) && reloadingPistol == false && !audio.isPlaying)
             {
                 reloadingPistol = true;
                 StartCoroutine(ReloadPistol());
-                audio.PlayOneShot(reloadPistol);
+				audio.PlayOneShot(reloadPistol);
             }
         }
 
@@ -115,7 +115,7 @@ public class Player_Shoot : NetworkBehaviour {
                 ShootRifle();
             }
 
-            if (Input.GetKeyDown(KeyCode.R) && reloadingRifle == false)
+			if (Input.GetKeyDown(KeyCode.R) && reloadingRifle == false && !audio.isPlaying)
             {
                 reloadingRifle = true;
                 StartCoroutine(ReloadRifle());
