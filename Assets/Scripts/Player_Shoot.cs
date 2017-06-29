@@ -144,13 +144,13 @@ public class Player_Shoot : NetworkBehaviour {
 		audio.PlayOneShot (shotPistol);
 		if(Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
 		{
-			if(hit.transform.tag == "Player")
+			if(hit.transform.tag == "Alien")
 			{
 				string uIdentity = hit.transform.name;
 				CmdTellServerWhoWasShot(uIdentity, damagePistol);
 			}
 
-			else if(hit.transform.tag == "Zombie")
+			else if(hit.transform.tag == "Alien")
 			{
 				string uIdentity = hit.transform.name;
 				CmdTellServerWhichZombieWasShot(uIdentity, damagePistol);
@@ -165,13 +165,13 @@ public class Player_Shoot : NetworkBehaviour {
         audio.PlayOneShot(shotRifle);
         if (Physics.Raycast(camTransform.TransformPoint(0, 0, 0.5f), camTransform.forward, out hit, range))
         {
-            if (hit.transform.tag == "Player")
+            if (hit.transform.tag == "Alien")
             {
                 string uIdentity = hit.transform.name;
                 CmdTellServerWhoWasShot(uIdentity, damageRifle);
             }
 
-            else if (hit.transform.tag == "Zombie")
+            else if (hit.transform.tag == "Alien")
             {
                 string uIdentity = hit.transform.name;
                 CmdTellServerWhichZombieWasShot(uIdentity, damageRifle);

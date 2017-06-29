@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 
 public class Zombie_Target : NetworkBehaviour {
 
-	private NavMeshAgent agent;
+	private UnityEngine.AI.NavMeshAgent agent;
 	private Transform myTransform;
 	public Transform targetTransform;
 	private LayerMask raycastLayer;
@@ -13,7 +13,7 @@ public class Zombie_Target : NetworkBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		agent = GetComponent<NavMeshAgent>();
+		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
 		myTransform = transform;
 		raycastLayer = 1<<LayerMask.NameToLayer("Player");
 
