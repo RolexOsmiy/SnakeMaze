@@ -43,8 +43,6 @@ public class Player_Shoot : NetworkBehaviour {
     public bool pistolActive = true;
     public GameObject rifle;
     public bool rifleActive;
-    public GameObject grenade;
-    public bool grenadeActive;
 
     // Use this for initialization
     void Awake () 
@@ -67,10 +65,8 @@ public class Player_Shoot : NetworkBehaviour {
             StopCoroutine(ReloadRifle());
             pistolActive = true;
             rifleActive = false;
-            grenadeActive = false;
             pistol.SetActive(true);
             rifle.SetActive(false);
-            grenade.SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -79,10 +75,8 @@ public class Player_Shoot : NetworkBehaviour {
             StopCoroutine(ReloadRifle());
             pistolActive = false;
             rifleActive = true;
-            grenadeActive = false;
             pistol.SetActive(false);
             rifle.SetActive(true);
-            grenade.SetActive(false);
         }        
     }
 

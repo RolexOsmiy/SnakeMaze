@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player_Health : NetworkBehaviour {
 
 	[SyncVar (hook = "OnHealthChanged")] private int health = 100;
+	public int StartHealth = 100;
 	private Text healthText;
 	private bool shouldDie = false;
 	public bool isDead = false;
@@ -60,7 +61,7 @@ public class Player_Health : NetworkBehaviour {
 	{
 		if(isLocalPlayer)
 		{
-			healthText.text = "Health " + health.ToString();
+			healthText.text = "HP: " + health.ToString();
 		}
 	}
 
@@ -77,7 +78,7 @@ public class Player_Health : NetworkBehaviour {
 
 	public void ResetHealth() //Called Player_Respawn
 	{
-		health = 100;
+		health = StartHealth;
 	}
 
 }
